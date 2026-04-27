@@ -22,7 +22,36 @@ interface ProductFormProps {
     categories: string[];
     onSubmit: (data: FormValues) => void;
     isLoading?: boolean;
+
 }
+
+const fieldStyle: React.CSSProperties = {
+    width: "100%",
+    background: "var(--bg-surface)",
+    border: "1px solid var(--border)",
+    borderRadius: "8px",
+    padding: "10px 12px",
+    color: "var(--text-primary)",
+    fontSize: "14px",
+    outline: "none",
+    transition: "border-color 0.15s, box-shadow 0.15s",
+    fontFamily: "inherit",
+};
+
+const labelStyle: React.CSSProperties = {
+    display: "block",
+    fontSize: "13px",
+    fontWeight: 600,
+    color: "var(--text-primary)",
+    marginBottom: "6px",
+};
+
+const errorStyle: React.CSSProperties = {
+    fontSize: "12px",
+    color: "var(--danger)",
+    marginTop: "4px",
+    fontWeight: 500,
+};
 
 export default function ProductForm({ product, categories, onSubmit, isLoading }: ProductFormProps) {
     const {
@@ -59,52 +88,68 @@ export default function ProductForm({ product, categories, onSubmit, isLoading }
         }
     }, [product, reset]);
 
-    const fieldClass =
-        "w-full bg-surface border border-border rounded-lg px-3 py-[10px] text-primary text-sm outline-none transition-[border-color,box-shadow] duration-150 font-[inherit] field-focus";
+    const onFocus = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+        e.target.style.borderColor = "var(--accent)";
+        e.target.style.boxShadow = "0 0 0 3px var(--accent-dim)";
+    };
+
+    const onBlur = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+        e.target.style.borderColor = "var(--border)";
+        e.target.style.boxShadow = "none";
+    };
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
-            <div className="grid gap-5">
+            <div style={{ display: "grid", gap: "1.25rem" }}>
                 <div>
-                    <label className="block text-[13px] font-semibold text-primary mb-[6px]">Product Name</label>
+                    <label style={labelStyle}>Product Name</label>
                     <input
                         {...register("name")}
                         placeholder="e.g. Wireless Noise-Cancelling Headphones"
-                        className={fieldClass}
+                        style={fieldStyle}
+                        onFocus={onFocus}
+                        onBlur={onBlur}
                     />
-                    {errors.name && <p className="text-[12px] text-danger mt-1 font-medium">{errors.name.message}</p>}
+                    {errors.name && <p style={errorStyle}>{errors.name.message}</p>}
                 </div>
 
-                <div className="grid grid-cols-2 gap-4">
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
                     <div>
-                        <label className="block text-[13px] font-semibold text-primary mb-[6px]">Price (₦)</label>
+                        <label style={labelStyle}>Price (₦)</label>
                         <input
                             {...register("price", { valueAsNumber: true })}
                             type="number"
                             step="0.01"
                             placeholder="0.00"
-                            className={fieldClass}
+                            style={fieldStyle}
+                            onFocus={onFocus}
+                            onBlur={onBlur}
                         />
-                        {errors.price && <p className="text-[12px] text-danger mt-1 font-medium">{errors.price.message}</p>}
+                        {errors.price && <p style={errorStyle}>{errors.price.message}</p>}
                     </div>
 
                     <div>
-                        <label className="block text-[13px] font-semibold text-primary mb-[6px]">Stock</label>
+                        <label style={labelStyle}>Stock</label>
                         <input
                             {...register("stock", { valueAsNumber: true })}
                             type="number"
                             placeholder="0"
-                            className={fieldClass}
+                            style={fieldStyle}
+                            onFocus={onFocus}
+                            onBlur={onBlur}
                         />
-                        {errors.stock && <p className="text-[12px] text-danger mt-1 font-medium">{errors.stock.message}</p>}
+                        {errors.stock && <p style={errorStyle}>{errors.stock.message}</p>}
                     </div>
                 </div>
 
                 <div>
-                    <label className="block text-[13px] font-semibold text-primary mb-[6px]">Category</label>
+                    <label style={labelStyle}>Category</label>
+                    {/* Using a select box for typical usage, populated dynamically from props */}
                     <select
                         {...register("category")}
-                        className={`${fieldClass} cursor-pointer`}
+                        style={{ ...fieldStyle, cursor: "pointer" }}
+                        onFocus={onFocus}
+                        onBlur={onBlur}
                     >
                         <option value="">Select a category...</option>
                         {categories.map((c) => (
@@ -114,39 +159,54 @@ export default function ProductForm({ product, categories, onSubmit, isLoading }
                         ))}
                         {!categories.length && <option value="Other">Other</option>}
                     </select>
-                    {errors.category && <p className="text-[12px] text-danger mt-1 font-medium">{errors.category.message}</p>}
+                    {errors.category && <p style={errorStyle}>{errors.category.message}</p>}
                 </div>
 
                 <div>
-                    <label className="block text-[13px] font-semibold text-primary mb-[6px]">Description</label>
+                    <label style={labelStyle}>Description</label>
                     <textarea
                         {...register("description")}
                         rows={3}
                         placeholder="Describe the product..."
-                        className={`${fieldClass} resize-y`}
+                        style={{ ...fieldStyle, resize: "vertical" }}
+                        onFocus={onFocus}
+                        onBlur={onBlur}
                     />
-                    {errors.description && <p className="text-[12px] text-danger mt-1 font-medium">{errors.description.message}</p>}
+                    {errors.description && <p style={errorStyle}>{errors.description.message}</p>}
                 </div>
 
                 <div>
-                    <label className="block text-[13px] font-semibold text-primary mb-[6px]">Image URL</label>
+                    <label style={labelStyle}>Image URL</label>
                     <input
                         {...register("imageUrl")}
                         type="url"
                         placeholder="https://..."
-                        className={fieldClass}
+                        style={fieldStyle}
+                        onFocus={onFocus}
+                        onBlur={onBlur}
                     />
-                    {errors.imageUrl && <p className="text-[12px] text-danger mt-1 font-medium">{errors.imageUrl.message}</p>}
+                    {errors.imageUrl && <p style={errorStyle}>{errors.imageUrl.message}</p>}
                 </div>
 
-                <div className="mt-2">
+                <div style={{ marginTop: "0.5rem" }}>
                     <button
                         type="submit"
                         disabled={isLoading}
-                        className={`w-full py-3 border-0 rounded-lg text-sm font-semibold font-[inherit] transition-[opacity,background] duration-150 ${isLoading
-                                ? "bg-border text-muted cursor-not-allowed"
-                                : "bg-primary text-surface cursor-pointer hover:opacity-90"
-                            }`}
+                        style={{
+                            width: "100%",
+                            padding: "12px",
+                            background: isLoading ? "var(--border)" : "var(--text-primary)",
+                            color: isLoading ? "var(--text-muted)" : "var(--bg-surface)",
+                            border: "none",
+                            borderRadius: "8px",
+                            fontSize: "14px",
+                            fontWeight: 600,
+                            cursor: isLoading ? "not-allowed" : "pointer",
+                            transition: "opacity 0.15s, background 0.15s",
+                            fontFamily: "inherit",
+                        }}
+                        onMouseEnter={(e) => { if (!isLoading) e.currentTarget.style.opacity = "0.9" }}
+                        onMouseLeave={(e) => { if (!isLoading) e.currentTarget.style.opacity = "1" }}
                     >
                         {isLoading ? "Saving..." : product ? "Update Details" : "Create Product"}
                     </button>

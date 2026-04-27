@@ -31,23 +31,72 @@ export default function Modal({ open, onClose, title, children, maxWidth = "560p
         <div
             ref={overlayRef}
             onClick={(e) => e.target === overlayRef.current && onClose()}
-            className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-fadeIn"
+            style={{
+                position: "fixed",
+                inset: 0,
+                background: "rgba(0,0,0,0.7)",
+                backdropFilter: "blur(4px)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                zIndex: 50,
+                padding: "1rem",
+                animation: "fadeIn 0.15s ease",
+            }}
         >
             <div
-                className="bg-elevated border border-border rounded-2xl w-full overflow-y-auto animate-slideUp"
-                style={{ maxWidth, maxHeight: "90vh" }}
+                style={{
+                    background: "var(--bg-elevated)",
+                    border: "1px solid var(--border)",
+                    borderRadius: "16px",
+                    width: "100%",
+                    maxWidth,
+                    maxHeight: "90vh",
+                    overflowY: "auto",
+                    animation: "slideUp 0.2s ease",
+                }}
             >
-                <div className="flex items-center justify-between px-6 py-5 border-b border-border-subtle">
-                    <h2 className="text-base font-semibold text-primary">{title}</h2>
+                <div
+                    style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        padding: "1.25rem 1.5rem",
+                        borderBottom: "1px solid var(--border-subtle)",
+                    }}
+                >
+                    <h2 style={{ fontSize: "1rem", fontWeight: 600, color: "var(--text-primary)" }}>{title}</h2>
                     <button
                         onClick={onClose}
-                        className="bg-transparent border-0 text-muted cursor-pointer flex p-1 rounded-md transition-colors duration-150 hover:text-primary hover:bg-hover"
+                        style={{
+                            background: "none",
+                            border: "none",
+                            color: "var(--text-muted)",
+                            cursor: "pointer",
+                            display: "flex",
+                            padding: "4px",
+                            borderRadius: "6px",
+                            transition: "color 0.15s, background 0.15s",
+                        }}
+                        onMouseEnter={(e) => {
+                            (e.currentTarget as HTMLButtonElement).style.color = "var(--text-primary)";
+                            (e.currentTarget as HTMLButtonElement).style.background = "var(--bg-hover)";
+                        }}
+                        onMouseLeave={(e) => {
+                            (e.currentTarget as HTMLButtonElement).style.color = "var(--text-muted)";
+                            (e.currentTarget as HTMLButtonElement).style.background = "none";
+                        }}
                     >
                         <X size={18} />
                     </button>
                 </div>
-                <div className="p-6">{children}</div>
+                <div style={{ padding: "1.5rem" }}>{children}</div>
             </div>
+
+            <style>{`
+        @keyframes fadeIn { from { opacity: 0 } to { opacity: 1 } }
+        @keyframes slideUp { from { transform: translateY(12px); opacity: 0 } to { transform: translateY(0); opacity: 1 } }
+      `}</style>
         </div>
     );
 }
