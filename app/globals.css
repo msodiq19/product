@@ -1,26 +1,143 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
 @import "tailwindcss";
 
+@theme {
+  --color-base: #f8fafc;
+  --color-surface: #ffffff;
+  --color-elevated: #ffffff;
+  --color-hover: #f1f5f9;
+  --color-border: #e2e8f0;
+  --color-border-subtle: #f1f5f9;
+  --color-primary: #0f172a;
+  --color-secondary: #475569;
+  --color-muted: #94a3b8;
+  --color-accent: #2563eb;
+  --color-accent-dim: rgba(37, 99, 235, 0.1);
+  --color-accent-glow: rgba(37, 99, 235, 0.2);
+  --color-success: #16a34a;
+  --color-warning: #d97706;
+  --color-danger: #dc2626;
+  --color-danger-dim: rgba(220, 38, 38, 0.1);
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg-base: var(--color-base);
+  --bg-surface: var(--color-surface);
+  --bg-elevated: var(--color-elevated);
+  --bg-hover: var(--color-hover);
+  --border: var(--color-border);
+  --border-subtle: var(--color-border-subtle);
+  --text-primary: var(--color-primary);
+  --text-secondary: var(--color-secondary);
+  --text-muted: var(--color-muted);
+  --accent: var(--color-accent);
+  --accent-dim: var(--color-accent-dim);
+  --accent-glow: var(--color-accent-glow);
+  --success: var(--color-success);
+  --warning: var(--color-warning);
+  --danger: var(--color-danger);
+  --danger-dim: var(--color-danger-dim);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+html,
+body {
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
+  background-color: var(--bg-base);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+}
+
+::selection {
+  background: var(--accent-dim);
+  color: var(--text-primary);
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-base);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+input[type="search"]::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+}
+
+select option {
+  background: var(--bg-surface);
+  color: var(--text-primary);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0
+  }
+
+  to {
+    opacity: 1
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@keyframes slideUp {
+  from {
+    transform: translateY(12px);
+    opacity: 0
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1
+  }
+}
+
+@keyframes skeleton-pulse {
+
+  0%,
+  100% {
+    opacity: 1
+  }
+
+  50% {
+    opacity: 0.5
+  }
+}
+
+@utility animate-fadeIn {
+  animation: fadeIn 0.15s ease;
+}
+
+@utility animate-slideUp {
+  animation: slideUp 0.2s ease;
+}
+
+@utility animate-skeleton {
+  animation: skeleton-pulse 1.8s ease-in-out infinite;
+}
+
+/* Form field focus ring utility */
+.field-focus:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-dim);
+  outline: none;
 }
