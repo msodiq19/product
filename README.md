@@ -98,11 +98,14 @@ The dashboard integrates with the [DummyJSON Products API](https://dummyjson.com
 
 > Add screenshots here before submission.
 
-```
-public/
-└── screenshots/
-    ├── dashboard-grid.png
-    ├── dashboard-list.png
-    ├── product-detail.png
-    └── product-form.png
-```
+Gallery (images are served from the `public` folder):
+
+<p align="center">
+    <img src="public/screenshots/dashboard-grid.png" alt="Dashboard Grid" width="45%" />
+    <img src="public/screenshots/dashboard-list.png" alt="Dashboard List" width="45%" />
+</p>
+
+<p align="center">
+    <img src="public/screenshots/product-details.png" alt="Product Detail" width="45%" />
+    <img src="public/screenshots/product-form.png" alt="Product Form" width="45%" />
+</p>

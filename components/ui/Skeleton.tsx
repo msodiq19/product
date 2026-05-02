@@ -1,30 +1,18 @@
 export function ProductCardSkeleton() {
     return (
         <div
-            style={{
-                background: "var(--bg-surface)",
-                border: "1px solid var(--border-subtle)",
-                borderRadius: "12px",
-                overflow: "hidden",
-                animation: "pulse 1.8s ease-in-out infinite",
-            }}
+            className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-xl overflow-hidden animate-[pulse_1.8s_ease-in-out_infinite]"
         >
-            <div style={{ height: "200px", background: "var(--bg-elevated)" }} />
-            <div style={{ padding: "1rem" }}>
-                <div style={{ height: "10px", width: "40%", background: "var(--bg-elevated)", borderRadius: "4px", marginBottom: "10px" }} />
-                <div style={{ height: "14px", width: "75%", background: "var(--bg-elevated)", borderRadius: "4px", marginBottom: "8px" }} />
-                <div style={{ height: "12px", width: "55%", background: "var(--bg-elevated)", borderRadius: "4px", marginBottom: "20px" }} />
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                    <div style={{ height: "20px", width: "30%", background: "var(--bg-elevated)", borderRadius: "4px" }} />
-                    <div style={{ height: "32px", width: "32px", background: "var(--bg-elevated)", borderRadius: "8px" }} />
+            <div className="h-[200px] bg-[var(--bg-elevated)]" />
+            <div className="p-4">
+                <div className="h-[10px] w-2/5 bg-[var(--bg-elevated)] rounded mb-[10px]" />
+                <div className="h-[14px] w-3/4 bg-[var(--bg-elevated)] rounded mb-2" />
+                <div className="h-[12px] w-[55%] bg-[var(--bg-elevated)] rounded mb-5" />
+                <div className="flex justify-between items-center">
+                    <div className="h-[20px] w-[30%] bg-[var(--bg-elevated)] rounded" />
+                    <div className="h-[32px] w-[32px] bg-[var(--bg-elevated)] rounded-lg" />
                 </div>
             </div>
-            <style>{`
-        @keyframes pulse {
-          0%, 100% { opacity: 1 }
-          50% { opacity: 0.5 }
-        }
-      `}</style>
         </div>
     );
 }
