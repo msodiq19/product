@@ -96,8 +96,6 @@ The dashboard integrates with the [DummyJSON Products API](https://dummyjson.com
 
 ## Screenshots
 
-> Add screenshots here before submission.
-
 Gallery (images are served from the `public` folder):
 
 <p align="center">
