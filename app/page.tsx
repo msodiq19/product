@@ -3,6 +3,7 @@
 import { LayoutGrid, List, Package, Plus, Search } from "lucide-react";
 import { useCallback, useMemo, useState } from "react";
 
+
 import DeleteDialog from "../components/features/products/DeleteDialog";
 import ProductCard from "../components/features/products/ProductCard";
 import ProductDetail from "../components/features/products/ProductDetail";
@@ -92,67 +93,20 @@ export default function Dashboard() {
   };
 
   return (
-    <div style={{ minHeight: "100vh", background: "var(--bg-base)" }}>
-      <header
-        style={{
-          borderBottom: "1px solid var(--border)",
-          background: "var(--bg-surface)",
-          position: "sticky",
-          top: 0,
-          zIndex: 10,
-        }}
-      >
-        <div
-          style={{
-            maxWidth: "1400px",
-            margin: "0 auto",
-            padding: "0 1.5rem",
-            height: "64px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-          }}
-        >
-          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-            <div
-              style={{
-                width: "36px",
-                height: "36px",
-                borderRadius: "8px",
-                background: "var(--text-primary)",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
+    <div className="min-h-screen bg-[var(--bg-base)]">
+      <header className="border-b border-[var(--border)] bg-[var(--bg-surface)] sticky top-0 z-10">
+        <div className="max-w-[1400px] mx-auto px-6 h-16 flex items-center justify-between">
+          <div className="flex items-center gap-[10px]">
+            <div className="w-9 h-9 rounded-lg bg-[var(--text-primary)] flex items-center justify-center">
               <Package size={20} color="var(--bg-surface)" />
             </div>
-            <span style={{ fontWeight: 700, fontSize: "17px", letterSpacing: "-0.02em" }}>
-              ProductHub
-            </span>
+            <span className="font-bold text-[17px] tracking-[-0.02em]">ProductHub</span>
           </div>
 
           <button
             onClick={() => setModal({ type: "create" })}
             id="add-product-btn"
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "6px",
-              background: "var(--accent)",
-              color: "#fff",
-              border: "none",
-              borderRadius: "8px",
-              padding: "9px 16px",
-              fontSize: "14px",
-              fontWeight: 600,
-              cursor: "pointer",
-              fontFamily: "inherit",
-              transition: "opacity 0.15s",
-              boxShadow: "0 4px 12px var(--accent-dim)"
-            }}
-            onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.9")}
-            onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
+            className="flex items-center gap-[6px] bg-[var(--accent)] text-white border-0 rounded-lg px-4 py-[9px] text-sm font-semibold cursor-pointer font-[inherit] transition-opacity duration-150 shadow-[0_4px_12px_var(--accent-dim)] hover:opacity-90"
           >
             <Plus size={16} />
             <span>New Product</span>
@@ -160,46 +114,34 @@ export default function Dashboard() {
         </div>
       </header>
 
-      <main style={{ maxWidth: "1400px", margin: "0 auto", padding: "2.5rem 1.5rem" }}>
-        <div style={{ marginBottom: "2rem", display: "flex", justifyContent: "space-between", alignItems: "flex-end" }}>
+      <main className="max-w-[1400px] mx-auto px-6 py-10">
+        <div className="mb-8 flex justify-between items-end">
           <div>
-            <h1 style={{ fontSize: "28px", fontWeight: 700, letterSpacing: "-0.03em", marginBottom: "4px" }}>
-              Inventory
-            </h1>
-            <p style={{ fontSize: "14px", color: "var(--text-secondary)" }}>
+            <h1 className="text-[28px] font-bold tracking-[-0.03em] mb-1">Inventory</h1>
+            <p className="text-sm text-[var(--text-secondary)]">
               {isLoading ? "Retrieving catalogue..." : `Showing ${paginated.length} of ${filtered.length} products`}
             </p>
           </div>
 
-          <div style={{ display: "flex", gap: "6px", background: "var(--bg-hover)", padding: "4px", borderRadius: "8px", border: "1px solid var(--border)" }}>
+          <div className="flex gap-[6px] bg-[var(--bg-hover)] p-1 rounded-lg border border-[var(--border)]">
             <button
               onClick={() => setViewMode("grid")}
-              style={{
-                background: viewMode === "grid" ? "var(--bg-surface)" : "transparent",
-                color: viewMode === "grid" ? "var(--text-primary)" : "var(--text-muted)",
-                border: viewMode === "grid" ? "1px solid var(--border)" : "1px solid transparent",
-                padding: "6px 10px",
-                borderRadius: "6px",
-                cursor: "pointer",
-                boxShadow: viewMode === "grid" ? "0 1px 3px rgba(0,0,0,0.05)" : "none",
-                transition: "all 0.15s",
-              }}
+              className={`px-[10px] py-[6px] rounded-md cursor-pointer transition-all duration-150 ${
+                viewMode === "grid"
+                  ? "bg-[var(--bg-surface)] text-[var(--text-primary)] border border-[var(--border)] shadow-[0_1px_3px_rgba(0,0,0,0.05)]"
+                  : "bg-transparent text-[var(--text-muted)] border border-transparent"
+              }`}
               title="Grid View"
             >
               <LayoutGrid size={16} />
             </button>
             <button
               onClick={() => setViewMode("list")}
-              style={{
-                background: viewMode === "list" ? "var(--bg-surface)" : "transparent",
-                color: viewMode === "list" ? "var(--text-primary)" : "var(--text-muted)",
-                border: viewMode === "list" ? "1px solid var(--border)" : "1px solid transparent",
-                padding: "6px 10px",
-                borderRadius: "6px",
-                cursor: "pointer",
-                boxShadow: viewMode === "list" ? "0 1px 3px rgba(0,0,0,0.05)" : "none",
-                transition: "all 0.15s",
-              }}
+              className={`px-[10px] py-[6px] rounded-md cursor-pointer transition-all duration-150 ${
+                viewMode === "list"
+                  ? "bg-[var(--bg-surface)] text-[var(--text-primary)] border border-[var(--border)] shadow-[0_1px_3px_rgba(0,0,0,0.05)]"
+                  : "bg-transparent text-[var(--text-muted)] border border-transparent"
+              }`}
               title="List View"
             >
               <List size={16} />
@@ -207,25 +149,11 @@ export default function Dashboard() {
           </div>
         </div>
 
-        <div
-          style={{
-            display: "flex",
-            gap: "12px",
-            marginBottom: "2rem",
-            alignItems: "stretch",
-          }}
-        >
-          <div style={{ position: "relative", flex: 1, maxWidth: "400px" }}>
+        <div className="flex gap-3 mb-8 items-stretch">
+          <div className="relative flex-1 max-w-[400px]">
             <Search
               size={16}
-              style={{
-                position: "absolute",
-                left: "14px",
-                top: "50%",
-                transform: "translateY(-50%)",
-                color: "var(--text-muted)",
-                pointerEvents: "none",
-              }}
+              className="absolute left-[14px] top-1/2 -translate-y-1/2 text-[var(--text-muted)] pointer-events-none"
             />
             <input
               id="search-input"
@@ -233,51 +161,15 @@ export default function Dashboard() {
               placeholder="Search products..."
               value={search}
               onChange={handleSearchChange}
-              style={{
-                width: "100%",
-                height: "100%",
-                background: "var(--bg-surface)",
-                border: "1px solid var(--border)",
-                borderRadius: "8px",
-                padding: "10px 14px 10px 40px",
-                color: "var(--text-primary)",
-                fontSize: "14px",
-                outline: "none",
-                fontFamily: "inherit",
-                transition: "border-color 0.15s, box-shadow 0.15s",
-              }}
-              onFocus={(e) => {
-                e.target.style.borderColor = "var(--accent)";
-                e.target.style.boxShadow = "0 0 0 3px var(--accent-dim)";
-              }}
-              onBlur={(e) => {
-                e.target.style.borderColor = "var(--border)";
-                e.target.style.boxShadow = "none";
-              }}
+              className="w-full h-full bg-[var(--bg-surface)] border border-[var(--border)] rounded-lg py-[10px] pr-[14px] pl-10 text-[var(--text-primary)] text-sm outline-none font-[inherit] transition-[border-color,box-shadow] duration-150 focus:border-[var(--accent)] focus:shadow-[0_0_0_3px_var(--accent-dim)]"
             />
           </div>
 
-          <div style={{ position: "relative", width: "220px" }}>
+          <div className="relative w-[220px]">
             <select
               value={category}
               onChange={handleCategoryChange}
-              style={{
-                width: "100%",
-                height: "100%",
-                background: "var(--bg-surface)",
-                border: "1px solid var(--border)",
-                borderRadius: "8px",
-                padding: "10px 14px",
-                color: "var(--text-primary)",
-                fontSize: "14px",
-                outline: "none",
-                fontFamily: "inherit",
-                cursor: "pointer",
-                appearance: "none",
-                transition: "border-color 0.15s",
-              }}
-              onFocus={(e) => (e.target.style.borderColor = "var(--accent)")}
-              onBlur={(e) => (e.target.style.borderColor = "var(--border)")}
+              className="w-full h-full bg-[var(--bg-surface)] border border-[var(--border)] rounded-lg py-[10px] px-[14px] text-[var(--text-primary)] text-sm outline-none font-[inherit] cursor-pointer appearance-none transition-[border-color] duration-150 focus:border-[var(--accent)]"
             >
               <option value="All">All Categories</option>
               {dynamicCategories.map((cat) => (
@@ -286,7 +178,7 @@ export default function Dashboard() {
                 </option>
               ))}
             </select>
-            <div style={{ position: "absolute", right: "12px", top: "50%", transform: "translateY(-50%)", pointerEvents: "none", color: "var(--text-muted)" }}>
+            <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-[var(--text-muted)]">
               <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
@@ -295,55 +187,36 @@ export default function Dashboard() {
         </div>
 
         {isError && (
-          <div
-            style={{
-              background: "var(--danger-dim)",
-              border: "1px solid rgba(220,38,38,0.2)",
-              borderRadius: "10px",
-              padding: "1rem 1.25rem",
-              color: "var(--danger)",
-              fontSize: "14px",
-              marginBottom: "1.5rem",
-            }}
-          >
+          <div className="bg-[var(--danger-dim)] border border-[rgba(220,38,38,0.2)] rounded-[10px] px-5 py-4 text-[var(--danger)] text-sm mb-6">
             Failed to load catalogue: {(error as Error)?.message ?? "Network error encountered."}
           </div>
         )}
 
         {isLoading ? (
           <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: viewMode === "grid" ? "repeat(auto-fill, minmax(260px, 1fr))" : "1fr",
-              gap: "1.5rem",
-            }}
+            className={`grid gap-6 ${
+              viewMode === "grid"
+                ? "grid-cols-[repeat(auto-fill,minmax(260px,1fr))]"
+                : "grid-cols-1"
+            }`}
           >
             {Array.from({ length: viewMode === "grid" ? 8 : 5 }, (_, i) => (
               <ProductCardSkeleton key={i} />
             ))}
           </div>
         ) : paginated.length === 0 ? (
-          <div
-            style={{
-              textAlign: "center",
-              padding: "5rem 2rem",
-              color: "var(--text-muted)",
-              background: "var(--bg-surface)",
-              border: "1px dashed var(--border)",
-              borderRadius: "12px",
-            }}
-          >
-            <Package size={48} style={{ margin: "0 auto 1rem", opacity: 0.3 }} />
-            <p style={{ fontSize: "16px", fontWeight: 600, marginBottom: "6px", color: "var(--text-primary)" }}>No products found</p>
-            <p style={{ fontSize: "14px" }}>Try adjusting your search terms or category filters.</p>
+          <div className="text-center py-20 px-8 text-[var(--text-muted)] bg-[var(--bg-surface)] border border-dashed border-[var(--border)] rounded-xl">
+            <Package size={48} className="mx-auto mb-4 opacity-30" />
+            <p className="text-base font-semibold mb-[6px] text-[var(--text-primary)]">No products found</p>
+            <p className="text-sm">Try adjusting your search terms or category filters.</p>
           </div>
         ) : (
           <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: viewMode === "grid" ? "repeat(auto-fill, minmax(260px, 1fr))" : "1fr",
-              gap: "1.5rem",
-            }}
+            className={`grid gap-6 ${
+              viewMode === "grid"
+                ? "grid-cols-[repeat(auto-fill,minmax(260px,1fr))]"
+                : "grid-cols-1"
+            }`}
           >
             {paginated.map((product) => (
               <ProductCard
@@ -359,32 +232,15 @@ export default function Dashboard() {
         )}
 
         {!isLoading && totalPages > 1 && (
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: "8px",
-              marginTop: "3rem",
-            }}
-          >
+          <div className="flex items-center justify-center gap-2 mt-12">
             <button
               onClick={() => setPage((p) => Math.max(1, p - 1))}
               disabled={page === 1}
-              style={{
-                padding: "8px 14px",
-                background: "var(--bg-surface)",
-                border: "1px solid var(--border)",
-                borderRadius: "8px",
-                color: page === 1 ? "var(--text-muted)" : "var(--text-primary)",
-                cursor: page === 1 ? "not-allowed" : "pointer",
-                fontSize: "13px",
-                fontFamily: "inherit",
-                fontWeight: 600,
-                transition: "all 0.15s",
-              }}
-              onMouseEnter={(e) => { if (page !== 1) e.currentTarget.style.background = "var(--bg-hover)"; }}
-              onMouseLeave={(e) => { e.currentTarget.style.background = "var(--bg-surface)"; }}
+              className={`px-[14px] py-2 bg-[var(--bg-surface)] border border-[var(--border)] rounded-lg text-[13px] font-[inherit] font-semibold transition-all duration-150 ${
+                page === 1
+                  ? "text-[var(--text-muted)] cursor-not-allowed"
+                  : "text-[var(--text-primary)] cursor-pointer hover:bg-[var(--bg-hover)]"
+              }`}
             >
               Previous
             </button>
@@ -398,27 +254,18 @@ export default function Dashboard() {
               }, [])
               .map((item, idx) =>
                 item === "..." ? (
-                  <span key={`ellipsis-${idx}`} style={{ color: "var(--text-muted)", fontSize: "13px", padding: "0 4px" }}>
+                  <span key={`ellipsis-${idx}`} className="text-[var(--text-muted)] text-[13px] px-1">
                     …
                   </span>
                 ) : (
                   <button
                     key={item}
                     onClick={() => setPage(item as number)}
-                    style={{
-                      width: "36px",
-                      height: "36px",
-                      borderRadius: "8px",
-                      border: "1px solid",
-                      background: page === item ? "var(--text-primary)" : "var(--bg-surface)",
-                      borderColor: page === item ? "var(--text-primary)" : "var(--border)",
-                      color: page === item ? "var(--bg-surface)" : "var(--text-secondary)",
-                      fontSize: "14px",
-                      fontWeight: page === item ? 600 : 500,
-                      cursor: "pointer",
-                      fontFamily: "inherit",
-                      transition: "all 0.15s"
-                    }}
+                    className={`w-9 h-9 rounded-lg border text-sm font-[inherit] cursor-pointer transition-all duration-150 ${
+                      page === item
+                        ? "bg-[var(--text-primary)] border-[var(--text-primary)] text-[var(--bg-surface)] font-semibold"
+                        : "bg-[var(--bg-surface)] border-[var(--border)] text-[var(--text-secondary)] font-medium hover:bg-[var(--bg-hover)]"
+                    }`}
                   >
                     {item}
                   </button>
@@ -428,20 +275,11 @@ export default function Dashboard() {
             <button
               onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
               disabled={page === totalPages}
-              style={{
-                padding: "8px 14px",
-                background: "var(--bg-surface)",
-                border: "1px solid var(--border)",
-                borderRadius: "8px",
-                color: page === totalPages ? "var(--text-muted)" : "var(--text-primary)",
-                cursor: page === totalPages ? "not-allowed" : "pointer",
-                fontSize: "13px",
-                fontFamily: "inherit",
-                fontWeight: 600,
-                transition: "all 0.15s",
-              }}
-              onMouseEnter={(e) => { if (page !== totalPages) e.currentTarget.style.background = "var(--bg-hover)"; }}
-              onMouseLeave={(e) => { e.currentTarget.style.background = "var(--bg-surface)"; }}
+              className={`px-[14px] py-2 bg-[var(--bg-surface)] border border-[var(--border)] rounded-lg text-[13px] font-[inherit] font-semibold transition-all duration-150 ${
+                page === totalPages
+                  ? "text-[var(--text-muted)] cursor-not-allowed"
+                  : "text-[var(--text-primary)] cursor-pointer hover:bg-[var(--bg-hover)]"
+              }`}
             >
               Next
             </button>

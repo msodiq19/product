@@ -39,17 +39,7 @@ export default function ProductCard({ product, onEdit, onDelete, onClick, layout
     return (
         <div
             onClick={() => onClick(product)}
-            style={{
-                background: "var(--bg-surface)",
-                border: "1px solid var(--border)",
-                borderRadius: "12px",
-                overflow: "hidden",
-                cursor: "pointer",
-                transition: "transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease",
-                position: "relative",
-                display: isList ? "flex" : "block",
-                height: isList ? "140px" : "auto",
-            }}
+            className={`bg-[var(--bg-surface)] border border-[var(--border)] rounded-xl overflow-hidden cursor-pointer transition-[transform,border-color,box-shadow] duration-200 ease-[ease] relative ${isList ? "flex h-[140px]" : "block"}`}
             onMouseEnter={(e) => {
                 const el = e.currentTarget as HTMLDivElement;
                 el.style.transform = isList ? "translateX(4px)" : "translateY(-3px)";
@@ -64,154 +54,81 @@ export default function ProductCard({ product, onEdit, onDelete, onClick, layout
             }}
         >
             <div
-                style={{
-                    position: "relative",
-                    height: isList ? "100%" : "200px",
-                    width: isList ? "180px" : "100%",
-                    flexShrink: 0,
-                    background: "var(--bg-hover)",
-                    overflow: "hidden",
-                    borderRight: isList ? "1px solid var(--border)" : "none",
-                    borderBottom: !isList ? "1px solid var(--border)" : "none",
-                }}
+                className={`relative bg-[var(--bg-hover)] overflow-hidden flex-shrink-0 ${
+                    isList
+                        ? "h-full w-[180px] border-r border-[var(--border)]"
+                        : "h-[200px] w-full border-b border-[var(--border)]"
+                }`}
             >
                 {product.imageUrl ? (
                     <Image
                         src={product.imageUrl}
                         alt={product.name}
                         fill
-                        style={{ objectFit: "cover" }}
+                        className="object-cover"
                         sizes="(max-width: 640px) 100vw, 25vw"
                         unoptimized
                         loading="eager"
                     />
                 ) : (
-                    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100%" }}>
+                    <div className="flex items-center justify-center h-full">
                         <Package size={48} color="var(--text-muted)" />
                     </div>
                 )}
                 <div
+                    className="absolute top-[10px] left-[10px] text-[11px] font-semibold px-2 py-[2px] rounded-full backdrop-blur-[4px] bg-white/90"
                     style={{
-                        position: "absolute",
-                        top: "10px",
-                        left: "10px",
-                        background: "rgba(255,255,255,0.9)",
-                        border: `1px solid ${accentColor}22`,
                         color: accentColor,
-                        fontSize: "11px",
-                        fontWeight: 600,
-                        padding: "2px 8px",
-                        borderRadius: "999px",
-                        backdropFilter: "blur(4px)",
+                        border: `1px solid ${accentColor}22`,
                     }}
                 >
                     {product.category}
                 </div>
             </div>
 
-            <div style={{ padding: "1rem", display: "flex", flexDirection: "column", flex: 1, minWidth: 0 }}>
-                <p style={{ fontSize: "12px", color: "var(--text-muted)", marginBottom: "4px", fontWeight: 600, letterSpacing: "0.02em", textTransform: "uppercase" }}>
+            <div className="p-4 flex flex-col flex-1 min-w-0">
+                <p className="text-[12px] text-[var(--text-muted)] mb-1 font-semibold tracking-[0.02em] uppercase">
                     {stockLevel === "critical" ? (
-                        <span style={{ color: "var(--danger)" }}>⚠ {product.stock} Left</span>
+                        <span className="text-[var(--danger)]">⚠ {product.stock} Left</span>
                     ) : stockLevel === "low" ? (
-                        <span style={{ color: "var(--warning)" }}>{product.stock} In stock</span>
+                        <span className="text-[var(--warning)]">{product.stock} In stock</span>
                     ) : (
-                        <span style={{ color: "var(--success)" }}>✓ In stock</span>
+                        <span className="text-[var(--success)]">✓ In stock</span>
                     )}
                 </p>
 
-                <h3
-                    style={{
-                        fontSize: "15px",
-                        fontWeight: 600,
-                        color: "var(--text-primary)",
-                        marginBottom: "4px",
-                        whiteSpace: "nowrap",
-                        overflow: "hidden",
-                        textOverflow: "ellipsis"
-                    }}
-                >
+                <h3 className="text-[15px] font-semibold text-[var(--text-primary)] mb-1 whitespace-nowrap overflow-hidden text-ellipsis">
                     {product.name}
                 </h3>
 
                 <p
-                    style={{
-                        fontSize: "13px",
-                        color: "var(--text-secondary)",
-                        marginBottom: isList ? "0" : "1rem",
-                        overflow: "hidden",
-                        display: "-webkit-box",
-                        WebkitLineClamp: isList ? 1 : 2,
-                        WebkitBoxOrient: "vertical",
-                        lineHeight: 1.5,
-                        flex: 1,
-                    }}
+                    className={`text-[13px] text-[var(--text-secondary)] overflow-hidden leading-[1.5] flex-1 ${
+                        isList ? "mb-0 line-clamp-1" : "mb-4 line-clamp-2"
+                    }`}
                 >
                     {product.description}
                 </p>
 
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: isList ? "auto" : 0 }}>
-                    <span style={{ fontSize: "16px", fontWeight: 700, color: "var(--text-primary)" }}>
+                <div className={`flex items-center justify-between ${isList ? "mt-auto" : ""}`}>
+                    <span className="text-base font-bold text-[var(--text-primary)]">
                         {formatNaira(product.price)}
                     </span>
 
                     <div
-                        style={{ display: "flex", gap: "6px" }}
+                        className="flex gap-[6px]"
                         onClick={(e) => e.stopPropagation()}
                     >
                         <button
                             onClick={() => onEdit(product)}
                             aria-label="Edit product"
-                            style={{
-                                background: "var(--bg-base)",
-                                border: "1px solid var(--border)",
-                                color: "var(--text-secondary)",
-                                cursor: "pointer",
-                                padding: "6px",
-                                borderRadius: "6px",
-                                display: "flex",
-                                transition: "all 0.15s",
-                            }}
-                            onMouseEnter={(e) => {
-                                const b = e.currentTarget;
-                                b.style.borderColor = "var(--accent)";
-                                b.style.color = "var(--accent)";
-                                b.style.background = "var(--accent-dim)";
-                            }}
-                            onMouseLeave={(e) => {
-                                const b = e.currentTarget;
-                                b.style.borderColor = "var(--border)";
-                                b.style.color = "var(--text-secondary)";
-                                b.style.background = "var(--bg-base)";
-                            }}
+                            className="bg-[var(--bg-base)] border border-[var(--border)] text-[var(--text-secondary)] cursor-pointer p-[6px] rounded-md flex transition-all duration-150 hover:border-[var(--accent)] hover:text-[var(--accent)] hover:bg-[var(--accent-dim)]"
                         >
                             <Edit2 size={15} />
                         </button>
                         <button
                             onClick={() => onDelete(product)}
                             aria-label="Delete product"
-                            style={{
-                                background: "var(--bg-base)",
-                                border: "1px solid var(--border)",
-                                color: "var(--text-secondary)",
-                                cursor: "pointer",
-                                padding: "6px",
-                                borderRadius: "6px",
-                                display: "flex",
-                                transition: "all 0.15s",
-                            }}
-                            onMouseEnter={(e) => {
-                                const b = e.currentTarget;
-                                b.style.borderColor = "var(--danger)";
-                                b.style.color = "var(--danger)";
-                                b.style.background = "var(--danger-dim)";
-                            }}
-                            onMouseLeave={(e) => {
-                                const b = e.currentTarget;
-                                b.style.borderColor = "var(--border)";
-                                b.style.color = "var(--text-secondary)";
-                                b.style.background = "var(--bg-base)";
-                            }}
+                            className="bg-[var(--bg-base)] border border-[var(--border)] text-[var(--text-secondary)] cursor-pointer p-[6px] rounded-md flex transition-all duration-150 hover:border-[var(--danger)] hover:text-[var(--danger)] hover:bg-[var(--danger-dim)]"
                         >
                             <Trash2 size={15} />
                         </button>

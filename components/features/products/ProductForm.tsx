@@ -25,33 +25,9 @@ interface ProductFormProps {
 
 }
 
-const fieldStyle: React.CSSProperties = {
-    width: "100%",
-    background: "var(--bg-surface)",
-    border: "1px solid var(--border)",
-    borderRadius: "8px",
-    padding: "10px 12px",
-    color: "var(--text-primary)",
-    fontSize: "14px",
-    outline: "none",
-    transition: "border-color 0.15s, box-shadow 0.15s",
-    fontFamily: "inherit",
-};
-
-const labelStyle: React.CSSProperties = {
-    display: "block",
-    fontSize: "13px",
-    fontWeight: 600,
-    color: "var(--text-primary)",
-    marginBottom: "6px",
-};
-
-const errorStyle: React.CSSProperties = {
-    fontSize: "12px",
-    color: "var(--danger)",
-    marginTop: "4px",
-    fontWeight: 500,
-};
+const fieldClass = "w-full bg-[var(--bg-surface)] border border-[var(--border)] rounded-lg px-3 py-[10px] text-[var(--text-primary)] text-sm outline-none transition-[border-color,box-shadow] duration-150 font-[inherit] focus:border-[var(--accent)] focus:shadow-[0_0_0_3px_var(--accent-dim)]";
+const labelClass = "block text-[13px] font-semibold text-[var(--text-primary)] mb-[6px]";
+const errorClass = "text-[12px] text-[var(--danger)] mt-1 font-medium";
 
 export default function ProductForm({ product, categories, onSubmit, isLoading }: ProductFormProps) {
     const {
@@ -88,68 +64,49 @@ export default function ProductForm({ product, categories, onSubmit, isLoading }
         }
     }, [product, reset]);
 
-    const onFocus = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-        e.target.style.borderColor = "var(--accent)";
-        e.target.style.boxShadow = "0 0 0 3px var(--accent-dim)";
-    };
-
-    const onBlur = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-        e.target.style.borderColor = "var(--border)";
-        e.target.style.boxShadow = "none";
-    };
-
     return (
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
-            <div style={{ display: "grid", gap: "1.25rem" }}>
+            <div className="grid gap-5">
                 <div>
-                    <label style={labelStyle}>Product Name</label>
+                    <label className={labelClass}>Product Name</label>
                     <input
                         {...register("name")}
                         placeholder="e.g. Wireless Noise-Cancelling Headphones"
-                        style={fieldStyle}
-                        onFocus={onFocus}
-                        onBlur={onBlur}
+                        className={fieldClass}
                     />
-                    {errors.name && <p style={errorStyle}>{errors.name.message}</p>}
+                    {errors.name && <p className={errorClass}>{errors.name.message}</p>}
                 </div>
 
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
+                <div className="grid grid-cols-2 gap-4">
                     <div>
-                        <label style={labelStyle}>Price (₦)</label>
+                        <label className={labelClass}>Price (₦)</label>
                         <input
                             {...register("price", { valueAsNumber: true })}
                             type="number"
                             step="0.01"
                             placeholder="0.00"
-                            style={fieldStyle}
-                            onFocus={onFocus}
-                            onBlur={onBlur}
+                            className={fieldClass}
                         />
-                        {errors.price && <p style={errorStyle}>{errors.price.message}</p>}
+                        {errors.price && <p className={errorClass}>{errors.price.message}</p>}
                     </div>
 
                     <div>
-                        <label style={labelStyle}>Stock</label>
+                        <label className={labelClass}>Stock</label>
                         <input
                             {...register("stock", { valueAsNumber: true })}
                             type="number"
                             placeholder="0"
-                            style={fieldStyle}
-                            onFocus={onFocus}
-                            onBlur={onBlur}
+                            className={fieldClass}
                         />
-                        {errors.stock && <p style={errorStyle}>{errors.stock.message}</p>}
+                        {errors.stock && <p className={errorClass}>{errors.stock.message}</p>}
                     </div>
                 </div>
 
                 <div>
-                    <label style={labelStyle}>Category</label>
-                    {/* Using a select box for typical usage, populated dynamically from props */}
+                    <label className={labelClass}>Category</label>
                     <select
                         {...register("category")}
-                        style={{ ...fieldStyle, cursor: "pointer" }}
-                        onFocus={onFocus}
-                        onBlur={onBlur}
+                        className={`${fieldClass} cursor-pointer`}
                     >
                         <option value="">Select a category...</option>
                         {categories.map((c) => (
@@ -159,54 +116,40 @@ export default function ProductForm({ product, categories, onSubmit, isLoading }
                         ))}
                         {!categories.length && <option value="Other">Other</option>}
                     </select>
-                    {errors.category && <p style={errorStyle}>{errors.category.message}</p>}
+                    {errors.category && <p className={errorClass}>{errors.category.message}</p>}
                 </div>
 
                 <div>
-                    <label style={labelStyle}>Description</label>
+                    <label className={labelClass}>Description</label>
                     <textarea
                         {...register("description")}
                         rows={3}
                         placeholder="Describe the product..."
-                        style={{ ...fieldStyle, resize: "vertical" }}
-                        onFocus={onFocus}
-                        onBlur={onBlur}
+                        className={`${fieldClass} resize-y`}
                     />
-                    {errors.description && <p style={errorStyle}>{errors.description.message}</p>}
+                    {errors.description && <p className={errorClass}>{errors.description.message}</p>}
                 </div>
 
                 <div>
-                    <label style={labelStyle}>Image URL</label>
+                    <label className={labelClass}>Image URL</label>
                     <input
                         {...register("imageUrl")}
                         type="url"
                         placeholder="https://..."
-                        style={fieldStyle}
-                        onFocus={onFocus}
-                        onBlur={onBlur}
+                        className={fieldClass}
                     />
-                    {errors.imageUrl && <p style={errorStyle}>{errors.imageUrl.message}</p>}
+                    {errors.imageUrl && <p className={errorClass}>{errors.imageUrl.message}</p>}
                 </div>
 
-                <div style={{ marginTop: "0.5rem" }}>
+                <div className="mt-2">
                     <button
                         type="submit"
                         disabled={isLoading}
-                        style={{
-                            width: "100%",
-                            padding: "12px",
-                            background: isLoading ? "var(--border)" : "var(--text-primary)",
-                            color: isLoading ? "var(--text-muted)" : "var(--bg-surface)",
-                            border: "none",
-                            borderRadius: "8px",
-                            fontSize: "14px",
-                            fontWeight: 600,
-                            cursor: isLoading ? "not-allowed" : "pointer",
-                            transition: "opacity 0.15s, background 0.15s",
-                            fontFamily: "inherit",
-                        }}
-                        onMouseEnter={(e) => { if (!isLoading) e.currentTarget.style.opacity = "0.9" }}
-                        onMouseLeave={(e) => { if (!isLoading) e.currentTarget.style.opacity = "1" }}
+                        className={`w-full py-3 border-0 rounded-lg text-sm font-semibold font-[inherit] transition-[opacity,background] duration-150 ${
+                            isLoading
+                                ? "bg-[var(--border)] text-[var(--text-muted)] cursor-not-allowed"
+                                : "bg-[var(--text-primary)] text-[var(--bg-surface)] cursor-pointer hover:opacity-90"
+                        }`}
                     >
                         {isLoading ? "Saving..." : product ? "Update Details" : "Create Product"}
                     </button>

@@ -31,66 +31,22 @@ export default function Modal({ open, onClose, title, children, maxWidth = "560p
         <div
             ref={overlayRef}
             onClick={(e) => e.target === overlayRef.current && onClose()}
-            style={{
-                position: "fixed",
-                inset: 0,
-                background: "rgba(0,0,0,0.7)",
-                backdropFilter: "blur(4px)",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                zIndex: 50,
-                padding: "1rem",
-                animation: "fadeIn 0.15s ease",
-            }}
+            className="fixed inset-0 bg-[rgba(0,0,0,0.7)] backdrop-blur-[4px] flex items-center justify-center z-50 p-4 animate-[fadeIn_0.15s_ease]"
         >
             <div
-                style={{
-                    background: "var(--bg-elevated)",
-                    border: "1px solid var(--border)",
-                    borderRadius: "16px",
-                    width: "100%",
-                    maxWidth,
-                    maxHeight: "90vh",
-                    overflowY: "auto",
-                    animation: "slideUp 0.2s ease",
-                }}
+                className="bg-[var(--bg-elevated)] border border-[var(--border)] rounded-2xl w-full max-h-[90vh] overflow-y-auto animate-[slideUp_0.2s_ease]"
+                style={{ maxWidth: maxWidth }}
             >
-                <div
-                    style={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                        padding: "1.25rem 1.5rem",
-                        borderBottom: "1px solid var(--border-subtle)",
-                    }}
-                >
-                    <h2 style={{ fontSize: "1rem", fontWeight: 600, color: "var(--text-primary)" }}>{title}</h2>
+                <div className="flex items-center justify-between px-6 py-5 border-b border-[var(--border-subtle)]">
+                    <h2 className="text-base font-semibold text-[var(--text-primary)]">{title}</h2>
                     <button
                         onClick={onClose}
-                        style={{
-                            background: "none",
-                            border: "none",
-                            color: "var(--text-muted)",
-                            cursor: "pointer",
-                            display: "flex",
-                            padding: "4px",
-                            borderRadius: "6px",
-                            transition: "color 0.15s, background 0.15s",
-                        }}
-                        onMouseEnter={(e) => {
-                            (e.currentTarget as HTMLButtonElement).style.color = "var(--text-primary)";
-                            (e.currentTarget as HTMLButtonElement).style.background = "var(--bg-hover)";
-                        }}
-                        onMouseLeave={(e) => {
-                            (e.currentTarget as HTMLButtonElement).style.color = "var(--text-muted)";
-                            (e.currentTarget as HTMLButtonElement).style.background = "none";
-                        }}
+                        className="bg-none border-0 text-[var(--text-muted)] cursor-pointer flex p-1 rounded-md transition-[color,background] duration-150 hover:text-[var(--text-primary)] hover:bg-[var(--bg-hover)]"
                     >
                         <X size={18} />
                     </button>
                 </div>
-                <div style={{ padding: "1.5rem" }}>{children}</div>
+                <div className="p-6">{children}</div>
             </div>
 
             <style>{`

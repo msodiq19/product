@@ -12,68 +12,33 @@ interface DeleteDialogProps {
 
 export default function DeleteDialog({ product, onConfirm, onCancel, isLoading }: DeleteDialogProps) {
     return (
-        <div style={{ textAlign: "center" }}>
-            <div
-                style={{
-                    width: "48px",
-                    height: "48px",
-                    borderRadius: "12px",
-                    background: "var(--danger-dim)",
-                    border: "1px solid rgba(239,68,68,0.2)",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    margin: "0 auto 1rem",
-                }}
-            >
+        <div className="text-center">
+            <div className="w-12 h-12 rounded-xl bg-[var(--danger-dim)] border border-[rgba(239,68,68,0.2)] flex items-center justify-center mx-auto mb-4">
                 <AlertTriangle size={22} color="var(--danger)" />
             </div>
 
-            <p style={{ fontSize: "14px", color: "var(--text-secondary)", marginBottom: "1.5rem" }}>
+            <p className="text-sm text-[var(--text-secondary)] mb-6">
                 Are you sure you want to delete{" "}
-                <span style={{ color: "var(--text-primary)", fontWeight: 600 }}>{product.name}</span>?
+                <span className="text-[var(--text-primary)] font-semibold">{product.name}</span>?
                 <br />
-                <span style={{ fontSize: "13px" }}>This action cannot be undone.</span>
+                <span className="text-[13px]">This action cannot be undone.</span>
             </p>
 
-            <div style={{ display: "flex", gap: "10px" }}>
+            <div className="flex gap-[10px]">
                 <button
                     onClick={onCancel}
-                    style={{
-                        flex: 1,
-                        padding: "10px",
-                        background: "var(--bg-surface)",
-                        border: "1px solid var(--border)",
-                        color: "var(--text-primary)",
-                        borderRadius: "8px",
-                        fontSize: "14px",
-                        fontWeight: 500,
-                        cursor: "pointer",
-                        fontFamily: "inherit",
-                        transition: "border-color 0.15s",
-                    }}
-                    onMouseEnter={(e) => (e.currentTarget.style.borderColor = "var(--text-muted)")}
-                    onMouseLeave={(e) => (e.currentTarget.style.borderColor = "var(--border)")}
+                    className="flex-1 py-[10px] bg-[var(--bg-surface)] border border-[var(--border)] text-[var(--text-primary)] rounded-lg text-sm font-medium cursor-pointer font-[inherit] transition-[border-color] duration-150 hover:border-[var(--text-muted)]"
                 >
                     Cancel
                 </button>
                 <button
                     onClick={onConfirm}
                     disabled={isLoading}
-                    style={{
-                        flex: 1,
-                        padding: "10px",
-                        background: isLoading ? "var(--danger-dim)" : "var(--danger)",
-                        border: "1px solid transparent",
-                        color: "#fff",
-                        borderRadius: "8px",
-                        fontSize: "14px",
-                        fontWeight: 600,
-                        cursor: isLoading ? "not-allowed" : "pointer",
-                        fontFamily: "inherit",
-                        opacity: isLoading ? 0.7 : 1,
-                        transition: "opacity 0.15s",
-                    }}
+                    className={`flex-1 py-[10px] border border-transparent text-white rounded-lg text-sm font-semibold font-[inherit] transition-opacity duration-150 ${
+                        isLoading
+                            ? "bg-[var(--danger-dim)] cursor-not-allowed opacity-70"
+                            : "bg-[var(--danger)] cursor-pointer"
+                    }`}
                 >
                     {isLoading ? "Deleting..." : "Delete"}
                 </button>

@@ -17,96 +17,57 @@ export default function ProductDetail({ product, onEdit }: ProductDetailProps) {
 
     return (
         <div>
-            <div
-                style={{
-                    position: "relative",
-                    height: "240px",
-                    borderRadius: "10px",
-                    overflow: "hidden",
-                    marginBottom: "1.25rem",
-                    background: "var(--bg-hover)",
-                    border: "1px solid var(--border)",
-                }}
-            >
+            <div className="relative h-[240px] rounded-[10px] overflow-hidden mb-5 bg-[var(--bg-hover)] border border-[var(--border)]">
                 {product.imageUrl ? (
                     <Image
                         src={product.imageUrl}
                         alt={product.name}
                         fill
-                        style={{ objectFit: "cover" }}
+                        className="object-cover"
                         sizes="560px"
                         unoptimized
                         loading="eager"
                     />
                 ) : (
-                    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100%" }}>
+                    <div className="flex items-center justify-center h-full">
                         <Package size={64} color="var(--text-muted)" />
                     </div>
                 )}
             </div>
 
-            <h2 style={{ fontSize: "20px", fontWeight: 700, marginBottom: "8px", color: "var(--text-primary)" }}>
-                {product.name}
-            </h2>
+            <h2 className="text-[20px] font-bold mb-2 text-[var(--text-primary)]">{product.name}</h2>
 
-            <div style={{ display: "flex", flexWrap: "wrap", gap: "8px", marginBottom: "1rem" }}>
-                <span
-                    style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "5px",
-                        background: "var(--accent-dim)",
-                        color: "var(--accent)",
-                        border: "1px solid var(--accent-dim)",
-                        fontSize: "12px",
-                        fontWeight: 600,
-                        padding: "3px 10px",
-                        borderRadius: "999px",
-                    }}
-                >
+            <div className="flex flex-wrap gap-2 mb-4">
+                <span className="flex items-center gap-[5px] bg-[var(--accent-dim)] text-[var(--accent)] border border-[var(--accent-dim)] text-[12px] font-semibold px-[10px] py-[3px] rounded-full">
                     <Tag size={11} />
                     {product.category}
                 </span>
 
                 <span
+                    className="text-[12px] font-semibold px-[10px] py-[3px] rounded-full"
                     style={{
-                        background: `${stockColor}12`,
+                        background: `color-mix(in srgb, ${stockColor} 7%, transparent)`,
                         color: stockColor,
-                        border: `1px solid ${stockColor}33`,
-                        fontSize: "12px",
-                        fontWeight: 600,
-                        padding: "3px 10px",
-                        borderRadius: "999px",
+                        border: `1px solid color-mix(in srgb, ${stockColor} 20%, transparent)`,
                     }}
                 >
                     {stockLabel} — {product.stock} units
                 </span>
             </div>
 
-            <p style={{ fontSize: "14px", color: "var(--text-secondary)", lineHeight: 1.6, marginBottom: "1.25rem" }}>
+            <p className="text-sm text-[var(--text-secondary)] leading-[1.6] mb-5">
                 {product.description}
             </p>
 
-            <div
-                style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    padding: "14px 16px",
-                    background: "var(--bg-base)",
-                    border: "1px solid var(--border)",
-                    borderRadius: "10px",
-                    marginBottom: "1.25rem",
-                }}
-            >
+            <div className="flex items-center justify-between px-4 py-[14px] bg-[var(--bg-base)] border border-[var(--border)] rounded-[10px] mb-5">
                 <div>
-                    <p style={{ fontSize: "12px", color: "var(--text-muted)", marginBottom: "2px", fontWeight: 500 }}>Price</p>
-                    <p style={{ fontSize: "22px", fontWeight: 700, color: "var(--text-primary)" }}>
+                    <p className="text-[12px] text-[var(--text-muted)] mb-[2px] font-medium">Price</p>
+                    <p className="text-[22px] font-bold text-[var(--text-primary)]">
                         {formatNaira(product.price)}
                     </p>
                 </div>
 
-                <div style={{ display: "flex", alignItems: "center", gap: "6px", color: "var(--text-secondary)", fontSize: "13px", fontWeight: 500 }}>
+                <div className="flex items-center gap-[6px] text-[var(--text-secondary)] text-[13px] font-medium">
                     <Calendar size={14} />
                     {new Date(product.createdAt).toLocaleDateString("en-US", {
                         day: "numeric",
@@ -118,21 +79,7 @@ export default function ProductDetail({ product, onEdit }: ProductDetailProps) {
 
             <button
                 onClick={onEdit}
-                style={{
-                    width: "100%",
-                    padding: "11px",
-                    background: "var(--text-primary)",
-                    color: "var(--bg-surface)",
-                    border: "none",
-                    borderRadius: "8px",
-                    fontSize: "14px",
-                    fontWeight: 600,
-                    cursor: "pointer",
-                    fontFamily: "inherit",
-                    transition: "opacity 0.2s"
-                }}
-                onMouseEnter={(e) => e.currentTarget.style.opacity = "0.9"}
-                onMouseLeave={(e) => e.currentTarget.style.opacity = "1"}
+                className="w-full py-[11px] bg-[var(--text-primary)] text-[var(--bg-surface)] border-0 rounded-lg text-sm font-semibold cursor-pointer font-[inherit] transition-opacity duration-200 hover:opacity-90"
             >
                 Edit Details
             </button>
